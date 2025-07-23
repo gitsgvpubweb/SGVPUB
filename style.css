@@ -145,24 +145,35 @@ img.responsive-img {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px); /* For Safari */
     border-bottom: 1px solid var(--color-border-light);
-    display: flex;
+    display: flex; /* Using flexbox as a fallback for outer container */
     align-items: center;
 }
 
 .site-header .container {
-    display: flex;
-    justify-content: space-between;
+    display: grid; /* Use grid for internal layout */
+    grid-template-columns: 1fr auto 1fr; /* Left nav, Logo, Right nav/actions */
     align-items: center;
     width: 100%;
     padding-left: var(--space-xxl); /* Desktop page margins */
     padding-right: var(--space-xxl);
+    gap: var(--space-lg); /* Gap between grid columns */
 }
 
 .logo-container {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    justify-self: center; /* Center horizontally within its grid cell */
+    grid-column: 2 / 3; /* Explicitly place in the middle column */
 }
+
+.site-logo {
+    display: block; /* Ensure it behaves like a block element */
+    width: 40px; /* Maintain the requested size */
+    height: 40px;
+    object-fit: contain; /* Ensure the image scales down without cropping */
+}
+
 
 .logo-container a {
     display: flex;
@@ -181,8 +192,10 @@ img.responsive-img {
     font-size: var(--font-size-headline-3);
     font-weight: var(--font-weight-bold);
     margin-left: var(--space-xs);
+    white-space: nowrap; /* Prevent brand name from wrapping */
 }
 
+/* Base nav styles */
 .main-nav ul {
     list-style: none;
     display: flex;
@@ -198,6 +211,7 @@ img.responsive-img {
     border-radius: var(--border-radius-sm);
     transition: color var(--duration-micro) var(--timing-default),
                 background-color var(--duration-micro) var(--timing-default);
+    white-space: nowrap; /* Prevent nav links from wrapping */
 }
 
 .main-nav .nav-link:hover,
@@ -206,11 +220,24 @@ img.responsive-img {
     background-color: rgba(0, 122, 255, 0.08); /* 8% opacity of primary */
 }
 
-/* Active state for navigation links (can be managed with JS if needed) */
-/* .main-nav .nav-link.active {
-    font-weight: var(--font-weight-medium);
-    color: var(--color-primary-brand);
-} */
+/* Specific positioning for left and right nav */
+.main-nav-left {
+    grid-column: 1 / 2; /* Place in first column */
+    justify-self: start; /* Align to the start of the column */
+}
+
+.main-nav-right {
+    /* This nav is inside header-right-group, so its grid properties come from parent */
+}
+
+/* Header actions (Contribute button and mobile toggle) */
+.header-right-group { /* This group will contain right nav and actions */
+    grid-column: 3 / 4; /* Place in third column */
+    justify-self: end; /* Align to the end of the column */
+    display: flex;
+    align-items: center;
+    gap: var(--space-md); /* Space between right nav and actions */
+}
 
 .header-actions {
     display: flex;
@@ -268,72 +295,7 @@ img.responsive-img {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* --- 3. Hero Section --- */
-
-.hero-section {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center content horizontally */
-    min-height: 80vh; /* Takes up significant viewport height */
-    color: var(--color-background-white); /* Text color for dark overlay */
-    overflow: hidden; /* Ensure overlay and image stay within bounds */
-}
-
-.hero-image-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Behind content */
-}
-
-.hero-image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Covers the area, might crop */
-}
-
-.hero-image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%); /* Gradient overlay */
-}
-
-.hero-content {
-    text-align: center;
-    z-index: 10; /* Above overlay */
-    max-width: 800px; /* Limit content width */
-    padding: var(--space-lg); /* Add some padding for readability */
-}
-
-.hero-content h1 {
-    font-size: var(--font-size-display-large);
-    font-weight: var(--font-weight-bold);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: var(--space-md);
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Text shadow for better readability */
-}
-
-.hero-content p {
-    font-size: var(--font-size-body-large);
-    font-weight: var(--font-weight-regular);
-    line-height: 1.6;
-    margin-bottom: var(--space-lg);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.hero-actions {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-sm);
-}
+/* --- 3. Removed Hero Section --- */
 
 /* --- 4. Section Styling --- */
 
@@ -403,7 +365,7 @@ img.responsive-img {
     border-top: 1px solid var(--color-border-light);
 }
 
-/* Program Card Specifics */
+/* Program Card Specifics (used for Current Initiatives flyers) */
 .program-card {
     text-align: left;
     display: flex;
@@ -416,7 +378,7 @@ img.responsive-img {
     font-weight: var(--font-weight-medium);
 }
 
-/* Impact Card Specifics */
+/* Impact Card Specifics (Used for placeholders) */
 .impact-card {
     background: linear-gradient(180deg, var(--color-content-background) 0%, var(--color-background-white) 100%);
     border-radius: var(--border-radius-xl);
@@ -444,24 +406,6 @@ img.responsive-img {
     font-size: var(--font-size-body-regular);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-primary);
-}
-
-/* Involved Card Specifics */
-.involved-card {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 320px; /* Ensure consistent height */
-}
-
-.involved-card .card-header {
-    flex-direction: column; /* Stack icon and title */
-}
-
-.involved-card .btn-primary,
-.involved-card .btn-secondary {
-    margin-top: auto; /* Push button to bottom */
 }
 
 /* --- 6. Buttons --- */
@@ -554,18 +498,6 @@ img.responsive-img {
     box-shadow: 0 0 0 var(--focus-outline-width) var(--color-primary-brand); /* Accessibility focus */
 }
 
-/* Specific button placements */
-.hero-actions .btn-primary {
-    background-color: var(--color-background-white);
-    color: var(--color-primary-brand);
-}
-
-.hero-actions .btn-primary:hover,
-.hero-actions .btn-primary:focus {
-    background-color: var(--color-content-background);
-    color: var(--color-primary-hover);
-}
-
 .nav-donate-btn {
     padding: var(--space-xs) var(--space-md); /* Slightly smaller than main buttons */
     height: 40px; /* Adjust height for header consistency */
@@ -604,7 +536,7 @@ img.responsive-img {
     box-shadow: var(--shadow-level-3);
 }
 
-/* --- 8. Programs Section --- */
+/* --- 8. Programs Section (now Current Initiatives) --- */
 
 .programs-section .container {
     max-width: 1200px;
@@ -616,37 +548,11 @@ img.responsive-img {
     gap: var(--space-lg);
 }
 
-/* --- 9. Impact Section --- */
+/* --- 9. Removed Impact Section --- */
 
-.impact-section {
-    background-color: var(--color-content-background);
-}
+/* --- 10. Removed Get Involved Section --- */
 
-.impact-section .container {
-    max-width: 1000px;
-}
-
-.impact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
-    gap: var(--space-lg);
-}
-
-/* --- 10. Get Involved Section --- */
-
-.get-involved-section {
-    background-color: var(--color-content-background);
-}
-
-.get-involved-section .container {
-    max-width: 1100px;
-}
-
-.involved-options {
-    gap: var(--space-lg);
-}
-
-/* --- 11. Donate & Volunteer Sections --- */
+/* --- 11. Donate & Volunteer Sections (now Ways to Contribute) --- */
 
 .donate-section,
 .volunteer-section {
@@ -743,20 +649,30 @@ img.responsive-img {
     justify-content: center;
     width: 40px; /* Consistent size */
     height: 40px;
-    background-color: var(--color-primary-brand);
-    border-radius: var(--border-radius-full);
-    transition: transform var(--duration-micro) var(--timing-default);
+    background-color: var(--color-background-white); /* Pure white background */
+    border-radius: var(--border-radius-full); /* Make it a perfect circle */
+    transition: transform var(--duration-micro) var(--timing-default),
+                box-shadow var(--duration-micro) var(--timing-default);
+    border: none; /* Ensure no border */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .social-links a:hover,
 .social-links a:focus {
     transform: translateY(-2px);
-    opacity: 0.9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
+    outline: none; /* Remove default focus outline */
 }
 
-.social-links svg {
-    fill: var(--color-background-white); /* White icon */
+/* Style for actual social icon images */
+.social-icon-img {
+    display: block;
+    width: 24px; /* Match SVG size */
+    height: 24px;
+    object-fit: contain;
+    /* filter: invert(1); Uncomment if your icons are white and need to be black on white background */
 }
+
 
 .contact-form-container {
     width: 100%;
@@ -790,33 +706,39 @@ img.responsive-img {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around; /* Distribute items evenly */
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: var(--space-lg);
+    gap: var(--space-md); /* Smaller gap for horizontal distribution */
+    align-items: flex-start; /* Align items to the top within their rows */
 }
 
 .footer-logo-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    flex: 1; /* Takes available space */
-    min-width: 200px;
+    flex: 1 1 250px; /* Allow growing/shrinking, min-width 250px */
+    min-width: 200px; /* Ensure it doesn't get too small */
+    padding-right: var(--space-md); /* Add some internal padding */
 }
 
-.footer-logo-section svg {
-    margin-bottom: var(--space-sm);
-}
-
-.footer-links,
-.footer-social {
-    flex: 1;
-    min-width: 150px;
+.footer-logo-img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    margin-bottom: var(--space-sm); /* Space below logo */
 }
 
 .footer-content h4 {
     font-size: var(--font-size-headline-3);
     font-weight: var(--font-weight-semibold);
     margin-bottom: var(--space-md);
+    white-space: nowrap; /* Prevent headline from wrapping if possible */
+}
+
+.footer-links {
+    flex: 1 1 150px; /* Allow growing/shrinking, min-width 150px */
+    padding-right: var(--space-md);
 }
 
 .footer-links ul {
@@ -826,8 +748,7 @@ img.responsive-img {
     gap: var(--space-xs);
 }
 
-.footer-links a,
-.footer-social a {
+.footer-links a {
     color: var(--color-background-white);
     text-decoration: none;
     font-size: var(--font-size-body-small);
@@ -835,42 +756,63 @@ img.responsive-img {
 }
 
 .footer-links a:hover,
-.footer-links a:focus,
-.footer-social a:hover,
-.footer-social a:focus {
+.footer-links a:focus {
     opacity: 0.8;
 }
 
+.footer-social { /* This section remains commented out in HTML as per request */
+    flex: 1 1 150px; /* Allow growing/shrinking, min-width 150px */
+    display: flex; /* Ensure its a flex container even if empty for centering purposes */
+    flex-direction: column;
+    align-items: flex-start; /* Align header and content to start */
+    /* If there's no content in this section, you might want to hide it completely */
+    /* display: none; */
+}
+
+/* This block is for styling if social icons were uncommented. Keep it for future use. */
 .footer-social .social-icons {
     display: flex;
     gap: var(--space-sm);
+    margin-top: var(--space-xs); /* Add some space below "Follow Us" heading */
 }
 
 .footer-social .social-icons a {
-    background-color: var(--color-text-secondary); /* Gray background for social icons */
-    border-radius: var(--border-radius-sm); /* Slightly less round than main ones */
+    background-color: var(--color-background-white); /* Pure white background */
+    border-radius: var(--border-radius-full); /* Make it a perfect circle */
     width: 36px;
     height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none; /* Remove border */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-.footer-social .social-icons svg {
-    fill: var(--color-background-white); /* White icon */
+.footer-social .social-icons a:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
+    transform: translateY(-2px);
 }
+
+.footer-social .social-icons .social-icon-img { /* Specific styling for images within footer social links */
+    /* filter: invert(0); Removed filter to show original black icons on white background */
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
 
 .footer-legal {
     width: 100%; /* Occupies full width */
     text-align: center;
     margin-top: var(--space-lg);
     padding-top: var(--space-md);
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border for separation */
 }
 
 .footer-legal p {
     color: var(--color-text-secondary);
     margin-bottom: var(--space-xs);
+    line-height: 1.5; /* Improve readability for legal text */
 }
 
 .footer-legal a {
@@ -916,17 +858,21 @@ select:focus {
 }
 
 /* Ensure sufficient contrast for all text elements */
-/* Basic contrast check (can be more robust with CSS parsers or tools) */
 h1, h2, h3, h4, h5, h6, p, li, a, span, div {
     color: var(--color-text-primary);
 }
-.hero-content h1, .hero-content p {
-    color: var(--color-background-white); /* Special case for hero overlay */
+
+/* Specific text color for footer to ensure contrast on dark background */
+.site-footer, .site-footer p, .site-footer a, .site-footer h4 {
+    color: var(--color-background-white);
 }
+.site-footer .footer-legal p, .site-footer .footer-legal a {
+    color: var(--color-text-secondary); /* Keep secondary for copyright/policy links */
+}
+
 
 /* Ensure touch targets are adequately sized and spaced */
 /* Buttons and links should have enough padding */
-/* If necessary, add min-width/height for custom elements */
 
 
 /* --- 15. Responsive Design --- */
@@ -941,35 +887,23 @@ h1, h2, h3, h4, h5, h6, p, li, a, span, div {
         padding-left: var(--space-lg);
         padding-right: var(--space-lg);
     }
-
-    .hero-content h1 {
-        font-size: 40px;
-    }
 }
 
 @media (max-width: 992px) {
+    /* General grid for smaller screens */
     .grid-cols-2,
     .grid-cols-3 {
         grid-template-columns: 1fr; /* Stack columns */
     }
 
-    .program-card,
-    .involved-card {
+    .program-card {
         min-height: auto; /* Allow cards to size naturally */
-    }
-
-    .hero-content h1 {
-        font-size: 36px;
-    }
-
-    .hero-content p {
-        font-size: var(--font-size-body-regular);
     }
 
     .section-header h2 {
         font-size: var(--font-size-headline-2);
     }
-
+    
     .impact-card .impact-value {
         font-size: var(--font-size-display-medium);
     }
@@ -984,59 +918,76 @@ h1, h2, h3, h4, h5, h6, p, li, a, span, div {
     }
 
     .footer-content {
-        flex-direction: column;
+        flex-direction: column; /* Stack footer sections vertically */
         text-align: center;
-        align-items: center;
+        align-items: center; /* Center items in column layout */
+        gap: var(--space-lg); /* More space between stacked sections */
     }
 
     .footer-logo-section,
     .footer-links,
     .footer-social {
         flex: none; /* Reset flex grow */
-        width: 100%;
+        width: 100%; /* Take full width */
+        padding: 0; /* Remove internal padding on mobile for full width */
+        align-items: center; /* Center content within these sections */
+    }
+    /* Specifically center content for logo section when stacked */
+    .footer-logo-section {
+        align-items: center;
     }
 
-    .footer-links ul,
-    .footer-social .social-icons {
-        justify-content: center;
-    }
-}
 
-@media (max-width: 768px) {
-    .site-header {
-        padding: 0 var(--space-sm); /* Reduce header padding */
+    .footer-links ul {
+        justify-content: center; /* Center quick links */
     }
 
-    .main-nav {
-        display: none; /* Hide desktop nav */
+    .footer-social .social-icons { /* This section remains commented out in HTML as per request */
+        justify-content: center; /* Center social icons */
+        margin-top: var(--space-sm); /* Adjust spacing below heading if no icons are displayed */
+    }
+
+    /* Header specific for mobile/tablet */
+    .site-header .container {
+        grid-template-columns: 1fr auto 1fr; /* Revert to a more flexible mobile grid */
+        justify-content: unset; /* Reset justify-content from desktop */
+        padding-left: var(--space-md); /* Adjust padding */
+        padding-right: var(--space-md);
+        gap: var(--space-sm); /* Smaller gap for mobile */
+    }
+
+    .main-nav-left,
+    .main-nav-right {
+        display: none; /* Hide desktop nav links on smaller screens */
+    }
+
+    .logo-container {
+        grid-column: 2 / 3; /* Keep logo in the center column visually */
+        justify-self: center; /* Ensures horizontal centering */
+        order: 1; /* Ensure logo is visually first in the grid sequence */
+    }
+    
+    .header-right-group {
+        grid-column: 3 / 4; /* Keep this group on the far right */
+        justify-self: end; /* Align to the end */
+        order: 2; /* Place after the logo */
+        display: flex; /* Ensure it remains flex for internal items */
+        align-items: center;
+        gap: var(--space-sm); /* Tighten gap between donate btn and toggle */
+    }
+
+    .nav-donate-btn {
+        display: none; /* Hide the header donate button on mobile to prioritize space for toggle */
     }
 
     .mobile-nav-toggle {
         display: block; /* Show mobile toggle */
     }
+}
 
-    /* Mobile Menu Styling (handled by JS, but basic structure can be here if needed) */
-    /* You'd typically add a class to body when menu is open */
-
-    .hero-section {
-        min-height: 60vh;
-    }
-
-    .hero-content {
-        padding: var(--space-md);
-    }
-
-    .hero-content h1 {
-        font-size: 32px;
-    }
-
-    .hero-actions {
-        flex-direction: column; /* Stack buttons on mobile */
-        gap: var(--space-sm);
-    }
-
-    .hero-actions .btn {
-        width: 100%; /* Make buttons full width */
+@media (max-width: 768px) {
+    .site-header .container {
+        padding: 0 var(--space-sm); /* Reduce header padding further */
     }
 
     .section-padding-large {
@@ -1047,7 +998,7 @@ h1, h2, h3, h4, h5, h6, p, li, a, span, div {
     .section-header {
         margin-bottom: var(--space-lg);
     }
-
+    
     .card {
         box-shadow: var(--shadow-level-1); /* Reset hover effect for mobile if needed */
     }
@@ -1068,10 +1019,6 @@ h1, h2, h3, h4, h5, h6, p, li, a, span, div {
 }
 
 @media (max-width: 480px) {
-    .hero-content h1 {
-        font-size: 28px;
-    }
-
     .btn {
         padding: var(--space-xs) var(--space-sm); /* Smaller button padding */
         min-width: auto; /* Remove min-width */
