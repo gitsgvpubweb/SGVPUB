@@ -150,13 +150,22 @@ img.responsive-img {
 }
 
 .site-header .container {
-    display: grid; /* Use grid for internal layout */
-    grid-template-columns: 1fr auto 1fr; /* Left nav, Logo, Right nav/actions */
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* Left Group (toggle), Logo, Right Group (nav/btn) */
     align-items: center;
     width: 100%;
     padding-left: var(--space-xxl); /* Desktop page margins */
     padding-right: var(--space-xxl);
     gap: var(--space-lg); /* Gap between grid columns */
+}
+
+/* New: Left group for mobile toggle and left nav */
+.header-left-group {
+    grid-column: 1 / 2; /* Place in first column */
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    justify-self: start; /* Align to the start */
 }
 
 .logo-container {
@@ -220,24 +229,24 @@ img.responsive-img {
     background-color: rgba(0, 122, 255, 0.08); /* 8% opacity of primary */
 }
 
-/* Specific positioning for left and right nav */
+/* Positioning for left and right nav (desktop only) */
 .main-nav-left {
-    grid-column: 1 / 2; /* Place in first column */
-    justify-self: start; /* Align to the start of the column */
+    /* On desktop, this is part of header-left-group */
 }
 
 .main-nav-right {
-    /* This nav is inside header-right-group, so its grid properties come from parent */
+    /* On desktop, this is part of header-right-group */
 }
 
-/* Header actions (Contribute button and mobile toggle) */
-.header-right-group { /* This group will contain right nav and actions */
+/* Right group for right nav and desktop actions */
+.header-right-group {
     grid-column: 3 / 4; /* Place in third column */
-    justify-self: end; /* Align to the end of the column */
     display: flex;
     align-items: center;
-    gap: var(--space-md); /* Space between right nav and actions */
+    gap: var(--space-md);
+    justify-self: end; /* Align to the end */
 }
+
 
 .header-actions {
     display: flex;
@@ -271,7 +280,7 @@ img.responsive-img {
     width: 24px;
     height: 2px;
     background-color: var(--color-text-primary);
-    transition: transform var(--duration-micro) var(--timing-default);
+    transition: transform var(--duration-quick) var(--timing-default), top var(--duration-quick) var(--timing-default);
 }
 
 .hamburger-icon::before {
@@ -294,6 +303,75 @@ img.responsive-img {
 .mobile-nav-toggle.active .hamburger-icon::after {
     transform: translateY(-7px) rotate(-45deg);
 }
+
+/* --- New Mobile Menu Overlay Styles --- */
+#mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background-white); /* Pure white background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-100%); /* Start off-screen to the left */
+    transition: opacity var(--duration-quick) var(--timing-default),
+                transform var(--duration-quick) var(--timing-default),
+                visibility var(--duration-quick) var(--timing-default);
+    z-index: 998; /* Below header, above main content */
+    padding: var(--space-lg); /* Padding around content */
+}
+
+#mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.mobile-nav-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl); /* Consistent spacing between menu items */
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.mobile-nav-content li {
+    width: 100%; /* Ensure list items take full width for consistent hover area */
+}
+
+.mobile-nav-content .nav-link {
+    font-size: var(--font-size-headline-2); /* Larger font for mobile links */
+    font-weight: var(--font-weight-medium); /* Slightly bolder than regular body text */
+    color: var(--color-text-primary);
+    text-decoration: none;
+    padding: var(--space-sm) var(--space-md);
+    display: block; /* Make links block level for easier tapping */
+    border-radius: var(--border-radius-sm); /* Consistent border radius */
+    transition: background-color var(--duration-micro) var(--timing-default),
+                color var(--duration-micro) var(--timing-default);
+}
+
+.mobile-nav-content .nav-link:hover,
+.mobile-nav-content .nav-link:focus {
+    background-color: rgba(0, 122, 255, 0.08); /* Consistent hover effect from desktop nav */
+    color: var(--color-primary-brand);
+    outline: none; /* Remove default focus outline */
+}
+
+.mobile-menu-btn { /* Styling for the "Contribute" button in mobile menu */
+    display: inline-flex; /* Inherit button display */
+    width: auto; /* Allow button to size to its content, or set a max-width */
+    padding: var(--space-sm) var(--space-md);
+    margin-top: var(--space-md); /* Space above the button if it's the last item */
+    font-size: var(--font-size-button-text); /* Consistent button text size */
+}
+
 
 /* --- 3. Removed Hero Section --- */
 
@@ -564,8 +642,7 @@ img.responsive-img {
     max-width: 1100px;
 }
 
-.donate-content,
-.volunteer-content {
+.donate-content {
     align-items: flex-start; /* Align items at the start */
     gap: var(--space-lg);
 }
@@ -583,13 +660,11 @@ img.responsive-img {
     margin-bottom: var(--space-xs);
 }
 
-.donate-form-placeholder,
-.volunteer-form-placeholder {
+.donate-form-placeholder {
     width: 100%; /* Take full width of its grid cell */
 }
 
-.donate-form-placeholder .impact-card,
-.volunteer-form-placeholder .impact-card {
+.donate-form-placeholder .impact-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -760,16 +835,13 @@ img.responsive-img {
     opacity: 0.8;
 }
 
-.footer-social { /* This section remains commented out in HTML as per request */
+.footer-social {
     flex: 1 1 150px; /* Allow growing/shrinking, min-width 150px */
-    display: flex; /* Ensure its a flex container even if empty for centering purposes */
+    display: flex;
     flex-direction: column;
     align-items: flex-start; /* Align header and content to start */
-    /* If there's no content in this section, you might want to hide it completely */
-    /* display: none; */
 }
 
-/* This block is for styling if social icons were uncommented. Keep it for future use. */
 .footer-social .social-icons {
     display: flex;
     gap: var(--space-sm);
@@ -794,7 +866,7 @@ img.responsive-img {
 }
 
 .footer-social .social-icons .social-icon-img { /* Specific styling for images within footer social links */
-    /* filter: invert(0); Removed filter to show original black icons on white background */
+    /* filter: invert(0); */ /* Keep original colors if transparent or already black */
     width: 24px;
     height: 24px;
     object-fit: contain;
@@ -877,6 +949,29 @@ h1, h2, h3, h4, h5, h6, p, li, a, span, div {
 
 /* --- 15. Responsive Design --- */
 
+@media (min-width: 993px) {
+    /* Desktop-specific styles */
+    .mobile-nav-toggle {
+        display: none; /* Hide hamburger on desktop */
+    }
+    .header-left-group .main-nav-left, /* Show desktop left nav */
+    .header-right-group .main-nav-right { /* Show desktop right nav */
+        display: flex;
+    }
+    .nav-donate-btn {
+        display: inline-flex; /* Show desktop header button */
+    }
+    .main-nav-left ul,
+    .main-nav-right ul {
+        /* Ensure horizontal display on desktop */
+        flex-direction: row;
+    }
+    #mobile-menu-overlay {
+        display: none !important; /* Ensure overlay is hidden on desktop */
+    }
+}
+
+
 @media (max-width: 1200px) {
     .container {
         padding-left: var(--space-lg);
@@ -942,46 +1037,48 @@ h1, h2, h3, h4, h5, h6, p, li, a, span, div {
         justify-content: center; /* Center quick links */
     }
 
-    .footer-social .social-icons { /* This section remains commented out in HTML as per request */
+    .footer-social .social-icons {
         justify-content: center; /* Center social icons */
-        margin-top: var(--space-sm); /* Adjust spacing below heading if no icons are displayed */
+        margin-top: var(--space-sm);
     }
 
     /* Header specific for mobile/tablet */
     .site-header .container {
-        grid-template-columns: 1fr auto 1fr; /* Revert to a more flexible mobile grid */
-        justify-content: unset; /* Reset justify-content from desktop */
+        grid-template-columns: auto 1fr auto; /* Left toggle, Logo, Right actions (empty or future) */
         padding-left: var(--space-md); /* Adjust padding */
         padding-right: var(--space-md);
         gap: var(--space-sm); /* Smaller gap for mobile */
     }
 
-    .main-nav-left,
-    .main-nav-right {
-        display: none; /* Hide desktop nav links on smaller screens */
+    .header-left-group {
+        grid-column: 1 / 2; /* Place in first column */
+        justify-self: start; /* Align to the start */
+        order: 1; /* Ensure it's visually first */
+    }
+
+    .mobile-nav-toggle {
+        display: block; /* Show hamburger on mobile */
+    }
+    /* Hide desktop nav elements on mobile */
+    .header-left-group .main-nav-left,
+    .header-right-group .main-nav-right,
+    .nav-donate-btn {
+        display: none;
     }
 
     .logo-container {
         grid-column: 2 / 3; /* Keep logo in the center column visually */
         justify-self: center; /* Ensures horizontal centering */
-        order: 1; /* Ensure logo is visually first in the grid sequence */
+        order: 2; /* Place after the toggle */
     }
     
     .header-right-group {
         grid-column: 3 / 4; /* Keep this group on the far right */
         justify-self: end; /* Align to the end */
-        order: 2; /* Place after the logo */
+        order: 3; /* Place after logo */
         display: flex; /* Ensure it remains flex for internal items */
         align-items: center;
-        gap: var(--space-sm); /* Tighten gap between donate btn and toggle */
-    }
-
-    .nav-donate-btn {
-        display: none; /* Hide the header donate button on mobile to prioritize space for toggle */
-    }
-
-    .mobile-nav-toggle {
-        display: block; /* Show mobile toggle */
+        gap: var(--space-sm);
     }
 }
 

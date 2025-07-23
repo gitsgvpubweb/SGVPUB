@@ -23,11 +23,12 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://sgvpub.org/">
-    <meta name="twitter:title" content="San Gabriel Valley Power Up Beacon | Empowering Our Community">
-    <meta name="twitter:description"
+    <meta property="twitter:url" content="https://sgvpub.org/">
+    <meta property="twitter:title" content="San Gabriel Valley Power Up Beacon | Empowering Our Community">
+    <meta property="twitter:description"
         content="San Gabriel Valley Power Up Beacon is dedicated to empowering communities through innovative programs and initiatives. Learn how we're making a difference and how you can get involved.">
-    <meta name="twitter:image" content="https://sgvpub.org/assets/logo.jpg"> <!-- Replace with your actual image URL -->
+    <meta property="twitter:image" content="https://sgvpub.org/assets/logo.jpg">
+    <!-- Replace with your actual image URL -->
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -51,7 +52,7 @@
   "url": "https://sgvpub.org/",
   "logo": "https://sgvpub.org/assets/logo.jpg",
   "sameAs": [
-    "https://www.facebook.com/sgvpowerupbeacon",
+    "https://www.facebook.com/profile.php?id=61578009281523&mibextid=wwXIfr",
     "https://www.twitter.com/sgvpowerupbeacon",
     "https://www.instagram.com/sgvpowerupbeacon",
     "https://www.linkedin.com/company/sgvpowerupbeacon"
@@ -88,28 +89,39 @@
     <!-- Skip to Content Link -->
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
+    <!-- Mobile Menu Overlay (New element for consolidated mobile navigation) -->
+    <div id="mobile-menu-overlay">
+        <nav class="mobile-nav-content">
+            <!-- Links will be dynamically added here by JavaScript -->
+        </nav>
+    </div>
+
     <!-- Header Navigation -->
     <header class="site-header">
         <div class="container">
-            <!-- Left Navigation -->
-            <nav class="main-nav main-nav-left">
-                <ul>
-                    <li><a href="#about" class="nav-link">Who We Are</a></li>
-                    <li><a href="#initiatives" class="nav-link">Current Initiatives</a></li>
-                </ul>
-            </nav>
+            <!-- Left Group: Mobile Toggle and Left Nav -->
+            <div class="header-left-group">
+                <button class="mobile-nav-toggle" aria-label="Toggle mobile navigation">
+                    <span class="hamburger-icon"></span>
+                </button>
+                <nav class="main-nav main-nav-left">
+                    <ul>
+                        <li><a href="#about" class="nav-link">Who We Are</a></li>
+                        <li><a href="#initiatives" class="nav-link">Current Initiatives</a></li>
+                    </ul>
+                </nav>
+            </div>
 
             <!-- Centered Logo -->
             <div class="logo-container">
                 <a href="/" aria-label="Homepage">
-                    <!-- Updated: Header Logo now uses a PNG image -->
                     <img src="/assets/logo.jpg" alt="San Gabriel Valley Power Up Beacon Logo" class="site-logo"
                         width="40" height="40">
                     <span class="brand-name">Power Up Beacon</span>
                 </a>
             </div>
 
-            <!-- Right Navigation & Actions -->
+            <!-- Right Group: Right Nav and Desktop Contribute Button -->
             <div class="header-right-group">
                 <nav class="main-nav main-nav-right">
                     <ul>
@@ -119,9 +131,6 @@
                 </nav>
                 <div class="header-actions">
                     <a href="#contribute" class="btn btn-primary nav-donate-btn">Contribute</a>
-                    <button class="mobile-nav-toggle" aria-label="Toggle mobile navigation">
-                        <span class="hamburger-icon"></span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -138,23 +147,19 @@
                 </div>
                 <div class="programs-grid">
 
-                    <!-- Flyer/Picture 3 -->
                     <article class="card">
                         <img src="/assets/flyer3.png" alt="Flyer for an educational workshop" class="responsive-img"
                             style="border-radius: 0;">
                     </article>
 
-                    <!-- Flyer/Picture 1 -->
-                    <article class="card">
+                    <!-- <article class="card">
                         <img src="/assets/flyer1.jpg" alt="Flyer for upcoming community event" class="responsive-img"
                             style="border-radius: 0;">
-                    </article>
-
-                    <!-- Flyer/Picture 2 - Commented out as per your previous instruction -->
-                    <!-- <article class="card">
-                        <img src="/assets/flyer2.jpg" alt="Flyer for a new program initiative" class="responsive-img"
-                            style="border-radius: 0;">
                     </article> -->
+                    <article class="card">
+                        <img src="/assets/flyer4.jpg" alt="Flyer for upcoming community event" class="responsive-img"
+                            style="border-radius: 0;">
+                    </article>
                 </div>
             </div>
         </section>
@@ -178,7 +183,6 @@
                             supported by a strong community network and innovative solutions to local challenges.</p>
                     </div>
                     <div class="about-image-container">
-                        <!-- Placeholder for About Image -->
                         <img src="assets/stock.webp" alt="Team members collaborating" class="responsive-img">
                     </div>
                 </div>
@@ -235,7 +239,7 @@
                         <h3 class="headline-3">Contact Information</h3>
                         <div class="contact-details">
                             <div class="contact-item">
-                                <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" <svg
+                                <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
                                     class="si-glyph si-glyph-pin-location-map" fill="#000000">
@@ -261,7 +265,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                <p class="body-regular">2088 S Atlantic Blvd Ste 155 Monterey Park, CA 91754</p>
+                                <p class="body-regular">2088 S. Atlantic Blvd #155 Monterey Park, CA 91754</p>
                             </div>
                             <div class="contact-item">
                                 <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -298,15 +302,11 @@
                             </div> -->
                         </div>
                         <div class="social-links">
-                            <!-- Updated: Social media icons now use img tags (replace src with your actual icon paths) -->
-                            <a href="https://www.facebook.com/sgvpowerupbeacon" aria-label="Facebook">
+                            <a href="https://www.facebook.com/profile.php?id=61578009281523&mibextid=wwXIfr"
+                                aria-label="Facebook">
                                 <img src="/assets/facebook.png" alt="Facebook" width="24" height="24"
                                     class="social-icon-img">
                             </a>
-                            <!-- <a href="https://www.twitter.com/sgvpowerupbeacon" aria-label="Twitter">
-                                <img src="/assets/icon-twitter.png" alt="Twitter" width="24" height="24"
-                                    class="social-icon-img">
-                            </a> -->
                             <!-- <a href="https://www.instagram.com/sgvpowerupbeacon" aria-label="Instagram">
                                 <img src="/assets/instagram.png" alt="Instagram" width="24" height="24"
                                     class="social-icon-img">
@@ -314,7 +314,6 @@
                         </div>
                     </div>
                     <div class="contact-form-container">
-                        <!-- Placeholder for Contact Form -->
                         <div class="card impact-card" style="border: none;">
                             <p class="body-regular">Got Questions?</p>
                             <p class="body-small">Feel free to ask away!</p>
@@ -326,7 +325,6 @@
                     </div>
                 </div>
             </div>
-            </div>
         </section>
     </main>
 
@@ -335,7 +333,6 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo-section">
-                    <!-- Updated: Footer Logo now uses a PNG image -->
                     <img src="/assets/logo.jpg" alt="San Gabriel Valley Power Up Beacon Footer Logo"
                         class="footer-logo-img" width="64" height="64">
                     <p class="body-regular">San Gabriel Valley Power Up Beacon</p>
@@ -352,15 +349,11 @@
                 <div class="footer-social">
                     <h4 class="headline-3">Follow Us</h4>
                     <div class="social-icons">
-                        <!-- Updated: Social media icons now use img tags (replace src with your actual icon paths) -->
-                        <a href="https://www.facebook.com/sgvpowerupbeacon" aria-label="Facebook">
+                        <a href="https://www.facebook.com/profile.php?id=61578009281523&mibextid=wwXIfr"
+                            aria-label="Facebook">
                             <img src="/assets/facebook.png" alt="Facebook" width="24" height="24"
                                 class="social-icon-img">
                         </a>
-                        <!-- <a href="https://www.twitter.com/sgvpowerupbeacon" aria-label="Twitter">
-                            <img src="/assets/icon-twitter-white.png" alt="Twitter" width="24" height="24"
-                                class="social-icon-img">
-                        </a> -->
                         <!-- <a href="https://www.instagram.com/sgvpowerupbeacon" aria-label="Instagram">
                             <img src="/assets/instagram.png" alt="Instagram" width="24" height="24"
                                 class="social-icon-img">
@@ -369,8 +362,6 @@
                 </div>
                 <div class="footer-legal">
                     <p class="caption">© 2025 San Gabriel Valley Power Up Beacon. All rights reserved.</p>
-                    <!-- <p class="caption"><a href="https://sgvpub.org/privacy-policy.html">Privacy Policy</a> | <a
-                            href="https://sgvpub.org/terms-of-service.html">Terms of Service</a></p> -->
                 </div>
             </div>
         </div>
